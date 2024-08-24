@@ -13,10 +13,10 @@ import omni.usd
 from omni.isaac.ui.element_wrappers import ScrollingWindow
 from omni.isaac.ui.menu import make_menu_item_description
 from omni.kit.menu.utils import add_menu_items, remove_menu_items
-from omni.usd import StageEventType
 
 from .global_variables import EXTENSION_TITLE, MENU_BAR_BUTTON_NAME
 from .ui_builder import UIBuilder
+from .utilities.ui import dock_window
 
 
 class Extension(omni.ext.IExt):
@@ -43,8 +43,6 @@ class Extension(omni.ext.IExt):
 
         self.ui_builder = UIBuilder()
         self._usd_context = omni.usd.get_context()
-        self._stage_event_sub = None
-        self._timeline = omni.timeline.get_timeline_interface()
 
     def on_shutdown(self):
         omni.log.info(f"on_shutdown")
@@ -55,20 +53,11 @@ class Extension(omni.ext.IExt):
         self.ui_builder.cleanup()
         gc.collect()
 
-    def _on_window(self, visible):
+    def _on_window(self, visible: bool):
+        omni.log.info(f"{self._on_window.__name__}: {visible}")
         if self._window.visible:
-            # Subscribe to Stage and Timeline Events
-            self._usd_context = omni.usd.get_context()
-            events = self._usd_context.get_stage_event_stream()
-            self._stage_event_sub = events.create_subscription_to_pop(self._on_stage_event)
-            stream = self._timeline.get_timeline_event_stream()
-            self._timeline_event_sub = stream.create_subscription_to_pop(self._on_timeline_event)
-
             self._build_ui()
         else:
-            self._usd_context = None
-            self._stage_event_sub = None
-            self._timeline_event_sub = None
             self.ui_builder.cleanup()
 
     def _build_ui(self):
@@ -76,38 +65,17 @@ class Extension(omni.ext.IExt):
             with ui.VStack(spacing=5, height=0):
                 self._build_extension_ui()
 
-        async def dock_window():
-            await omni.kit.app.get_app().next_update_async()
-
-            def dock(target_window, docking_window_title, location, ratio=0.5):
-                docking_window = omni.ui.Workspace.get_window(docking_window_title)
-                if docking_window and target_window:
-                    docking_window.dock_in(target_window, location, ratio)
-                return docking_window
-
-            target_window_title = "Viewport"
-            target_window = ui.Workspace.get_window(target_window_title)
-            dock(target_window, EXTENSION_TITLE, omni.ui.DockPosition.LEFT, 0.33)
-            await omni.kit.app.get_app().next_update_async()
-
-        self._task = asyncio.ensure_future(dock_window())
-
-    #################################################################
-    # Functions below this point call user functions
-    #################################################################
+        asyncio.ensure_future(
+            dock_window(
+                target_window_title="Viewport",
+                docking_window_title=EXTENSION_TITLE,
+                dock_position=ui.DockPosition.LEFT,
+                ratio=0.3,
+            )
+        )
 
     def _menu_callback(self):
         self._window.visible = not self._window.visible
-        self.ui_builder.on_menu_callback()
-
-    def _on_timeline_event(self, event):
-        self.ui_builder.on_timeline_event(event)
-
-    def _on_stage_event(self, event):
-        if event.type == int(StageEventType.OPENED) or event.type == int(StageEventType.CLOSED):
-            self.ui_builder.cleanup()
-
-        self.ui_builder.on_stage_event(event)
 
     def _build_extension_ui(self):
         self.ui_builder.build_ui()
