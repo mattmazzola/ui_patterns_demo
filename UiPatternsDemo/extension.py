@@ -1,4 +1,3 @@
-import asyncio
 import gc
 import weakref
 
@@ -16,7 +15,6 @@ from omni.kit.menu.utils import add_menu_items, remove_menu_items
 
 from .global_variables import EXTENSION_TITLE, MENU_BAR_BUTTON_NAME
 from .ui_builder import UIBuilder
-from .utilities.ui import dock_window
 
 
 class Extension(omni.ext.IExt):
@@ -63,14 +61,14 @@ class Extension(omni.ext.IExt):
             with ui.VStack(spacing=5, height=0):
                 self._build_extension_ui()
 
-        asyncio.ensure_future(
-            dock_window(
-                target_window_title="Viewport",
-                docking_window_title=EXTENSION_TITLE,
-                dock_position=ui.DockPosition.LEFT,
-                ratio=0.3,
-            )
-        )
+        # asyncio.ensure_future(
+        #     dock_window(
+        #         target_window_title="Viewport",
+        #         docking_window_title=EXTENSION_TITLE,
+        #         dock_position=ui.DockPosition.LEFT,
+        #         ratio=0.3,
+        #     )
+        # )
 
     def _menu_callback(self):
         self._window.visible = not self._window.visible
