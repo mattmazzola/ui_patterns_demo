@@ -23,7 +23,6 @@ class Extension(omni.ext.IExt):
 
     def on_startup(self, ext_id: str):
         self.ext_id = ext_id
-        self._usd_context = omni.usd.get_context()
 
         name = EXTENSION_TITLE
         # Build Window
@@ -42,7 +41,6 @@ class Extension(omni.ext.IExt):
         add_menu_items(self._menu_items, MENU_BAR_BUTTON_NAME)
 
         self.ui_builder = UIBuilder()
-        self._usd_context = omni.usd.get_context()
 
     def on_shutdown(self):
         omni.log.info(f"on_shutdown")
