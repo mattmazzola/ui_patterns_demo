@@ -5,10 +5,10 @@ order = 0
 [package]
 version = "1.0.0"
 category = "Simulation"
-title = "UiPatternsDemo"
+title = "UI Patterns Demo"
 description = "Demonstration of common UI patterns"
 authors = ["Matthew Mazzola"]
-repository = ""
+repository = "https://github.com/mattmazzola/ui_patterns_demo"
 keywords = ["UI", "Patterns"]
 changelog = "docs/CHANGELOG.md"
 readme = "docs/README.md"
