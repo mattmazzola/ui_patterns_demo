@@ -14,15 +14,37 @@ class UIBuilder:
             ui_elem.cleanup()
 
     def build_ui(self):
-        ui.Label(
-            "UI Patterns Demo",
-            alignment=ui.Alignment.CENTER,
-            style={"font_size": 28},
-        )
+        with ui.VStack(spacing=20):
+            ui.Label(
+                "UI Patterns Demo",
+                alignment=ui.Alignment.CENTER,
+                style={"font_size": 28},
+            )
 
-        self._counter_1_int_model = counter_component("Counter 1")
-        self._counter_2_int_model = counter_component("Counter 2")
-        self._create_value_description_frame(self._counter_1_int_model)
+            self._counter_1_int_model = counter_component("Counter 1")
+            self._counter_2_int_model = counter_component("Counter 2")
+
+            self._computed_value = ui.SimpleIntModel(0)
+
+            def update_computed_value(_: ui.SimpleIntModel):
+                total = self._counter_1_int_model.as_int + self._counter_2_int_model.as_int
+                self._computed_value.set_value(total)
+
+            self._counter_1_int_model.add_value_changed_fn(update_computed_value)
+            self._counter_2_int_model.add_value_changed_fn(update_computed_value)
+
+            self._computed_label = ui.Label(
+                f"Total: {self._computed_value.as_int}",
+                alignment=ui.Alignment.CENTER,
+                style={"font_size": 28},
+            )
+
+            def update_computed_label(model: ui.SimpleIntModel):
+                self._computed_label.text = f"Total: {model.as_int}"
+
+            self._computed_value.add_value_changed_fn(update_computed_label)
+
+            self._create_value_description_frame(self._computed_value)
 
     def _create_value_description_frame(self, int_model: ui.SimpleIntModel):
         description_frame = ui.Frame(height=40)
