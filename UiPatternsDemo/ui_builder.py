@@ -3,7 +3,7 @@ import omni.ui as ui
 from omni.isaac.ui.element_wrappers import UIWidgetWrapper
 from omni.ui import color as cl
 
-from .components import counter_component
+from .components import counter_component, create_value_description_frame
 
 
 class UIBuilder:
@@ -53,7 +53,11 @@ class UIBuilder:
 
             self._computed_value.add_value_changed_fn(update_computed_label)
 
-            self._create_value_description_frame(self._computed_value)
+            create_value_description_frame(
+                self._computed_value,
+                low_threshold=-3,
+                high_threshold=4,
+            )
 
             with ui.HStack(width=0):
                 ui.Button(
@@ -65,33 +69,6 @@ class UIBuilder:
                     name="text",
                     style={"margin_width": 10},
                 )
-
-    def _create_value_description_frame(self, int_model: ui.SimpleIntModel):
-        description_frame = ui.Frame(height=40)
-
-        # Overwrite frame contents whenever the model changes
-        # Create Frame first, use reference inside the callback
-        # https://docs.omniverse.nvidia.com/kit/docs/omni.kit.documentation.ui.style/latest/containers.html#frame
-        def int_changed(model: ui.SimpleIntModel):
-            with description_frame:
-                if model.as_int <= -5:
-                    ui.Label(
-                        "Low",
-                        alignment=ui.Alignment.CENTER,
-                        style={"font_size": 42},
-                    )
-
-                elif model.as_int >= 5:
-                    ui.Label(
-                        "High",
-                        alignment=ui.Alignment.CENTER,
-                        style={"font_size": 42},
-                    )
-
-                else:
-                    ui.Spacer()
-
-        int_model.add_value_changed_fn(lambda model: int_changed(model))
 
     # https://docs.omniverse.nvidia.com/kit/docs/omni.kit.documentation.ui.style/latest/window.html#menubar
     def create_and_show_window_with_menu(self):
