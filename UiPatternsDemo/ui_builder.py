@@ -24,6 +24,7 @@ class UIBuilder:
             self._counter_1_int_model = counter_component("Counter 1")
             self._counter_2_int_model = counter_component("Counter 2")
 
+            # Create computed value from the sum of the two counters
             self._computed_value = ui.SimpleIntModel(0)
 
             def update_computed_value(_: ui.SimpleIntModel):
