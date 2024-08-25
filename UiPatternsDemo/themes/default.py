@@ -1,46 +1,52 @@
-from omni.ui import color as cl
-
-color_button_inc_default = cl("#117edd")
-color_button_inc_label_default = cl("#aaaaaa")
-color_button_inc_hover = cl("#006eff")
-color_button_inc_label_hover = cl("#ffffff")
-
-color_button_dec_default = cl("#6db2fa")
-color_button_dec_label_default = cl("#444444")
-color_button_dec_hover = cl("#4da2da")
-color_button_dec_label_hover = cl("#000000")
+from .colors import (
+    color_black,
+    color_blue,
+    color_blue_dark,
+    color_gray,
+    color_red,
+    color_red_dark,
+    color_white,
+)
 
 button_border_radius = 15
 
 counter_style = {
+    "Label::title": {
+        "font_size": 24,
+    },
     "IncrementButton::inc": {
-        "background_color": color_button_inc_default,
+        "border_color": color_white,
+        "border_width": 2,
+        "background_color": color_blue,
         "border_radius": button_border_radius,
     },
     "IncrementButton::inc:hovered": {
-        "background_color": color_button_inc_hover,
+        "background_color": color_blue_dark,
+        "border_color": color_gray,
     },
     "IncrementButton.Label::inc": {
         "font_weight": "bold",
         "font_size": 24,
-        "color": color_button_inc_label_default,
+        "color": color_gray,
     },
     "IncrementButton.Label::inc:hovered": {
-        "color": color_button_inc_label_hover,
+        "color": color_white,
     },
     "DecrementButton::dec": {
-        "background_color": color_button_dec_default,
+        "border_color": color_black,
+        "border_width": 2,
+        "background_color": color_red,
         "border_radius": button_border_radius,
     },
     "DecrementButton::dec:hovered": {
-        "background_color": color_button_dec_hover,
+        "background_color": color_red_dark,
     },
     "DecrementButton.Label::dec": {
         "font_weight": "bold",
         "font_size": 24,
-        "color": color_button_dec_label_default,
+        "color": color_gray,
     },
     "DecrementButton.Label::dec:hovered": {
-        "color": color_button_dec_label_hover,
+        "color": color_white,
     },
 }

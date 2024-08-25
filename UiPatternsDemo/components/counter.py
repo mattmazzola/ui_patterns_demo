@@ -6,16 +6,24 @@ from ..themes.default import counter_style
 
 def counter_component(title: str = "Counter"):
     # https://docs.omniverse.nvidia.com/kit/docs/omni.kit.documentation.ui.style/latest/styling.html#customize-the-selector-type-using-style-type-name-override
-    with ui.VStack(style=counter_style, spacing=10):
+    with ui.VStack(
+        style=counter_style,
+        spacing=10,
+    ):
         ui.Label(
             title,
             alignment=ui.Alignment.CENTER,
-            style={"font_size": 20},
+            name="title",
         )
 
         with ui.HStack():
             ui.Spacer()
-            with ui.HStack(spacing=0, width=200, height=50, alignment=ui.Alignment.CENTER):
+            with ui.HStack(
+                spacing=0,
+                width=200,
+                height=50,
+                alignment=ui.Alignment.CENTER,
+            ):
                 counter_int_model = ui.SimpleIntModel(0)
 
                 def _on_click_decrement():
