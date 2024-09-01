@@ -2,6 +2,7 @@ import omni.ui as ui
 from omni.isaac.ui.element_wrappers import UIWidgetWrapper
 
 from .components import counter_component, create_modal, create_value_description_frame
+from .themes.default import main_ui_style
 
 
 class UIBuilder:
@@ -19,11 +20,14 @@ class UIBuilder:
             self._modal = None
 
     def build_ui(self):
-        with ui.VStack(spacing=20):
+        with ui.VStack(
+            spacing=20,
+            style=main_ui_style,
+        ):
             ui.Label(
-                "UI Patterns Demo",
+                "UI Patterns (Omniverse)",
                 alignment=ui.Alignment.CENTER,
-                style={"font_size": 28},
+                name="header",
             )
 
             self._counter_1 = counter_component("Counter 1")
@@ -42,7 +46,7 @@ class UIBuilder:
             self._computed_label = ui.Label(
                 f"Total: {self._computed_int_model.as_int}",
                 alignment=ui.Alignment.CENTER,
-                style={"font_size": 28},
+                name="large",
             )
 
             def update_computed_label(model: ui.SimpleIntModel):
@@ -62,5 +66,5 @@ class UIBuilder:
             ui.Button(
                 text="Create Modal",
                 clicked_fn=create_model_inner,
-                height=50,
+                height=40,
             )

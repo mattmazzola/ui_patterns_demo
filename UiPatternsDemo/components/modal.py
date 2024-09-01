@@ -8,7 +8,7 @@ from ..themes.colors import cl, color_gray
 def create_modal(modal: ui.Window | None, int_model: ui.SimpleIntModel):
     if not modal:
         modal = ui.Window(
-            "Window Menu Example",
+            "Example Modal",
             width=300,
             height=300,
             flags=ui.WINDOW_FLAGS_MENU_BAR,
@@ -22,7 +22,7 @@ def create_modal(modal: ui.Window | None, int_model: ui.SimpleIntModel):
                 "border_width": 1,
                 "border_color": cl.yellow,
                 "padding": 2,
-            }
+            },
         }
 
         modal.menu_bar.style = menu_bar_style

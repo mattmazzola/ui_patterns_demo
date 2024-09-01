@@ -51,7 +51,7 @@ def counter_component(title: str = "Counter"):
                 counter_label = ui.Label(
                     str(counter_int_model.as_int),
                     alignment=ui.Alignment.CENTER,
-                    style={"font_size": 24},
+                    name="value",
                 )
 
                 def update_value(model: ui.SimpleIntModel):

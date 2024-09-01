@@ -14,6 +14,9 @@ counter_style = {
     "Label::title": {
         "font_size": 24,
     },
+    "Label::value": {
+        "font_size": 24,
+    },
     "IncrementButton::inc": {
         "border_color": color_white,
         "border_width": 2,
@@ -48,5 +51,14 @@ counter_style = {
     },
     "DecrementButton.Label::dec:hovered": {
         "color": color_white,
+    },
+}
+
+main_ui_style = {
+    "Label::header": {
+        "font_size": 32,
+    },
+    "Label::large": {
+        "font_size": 28,
     },
 }
