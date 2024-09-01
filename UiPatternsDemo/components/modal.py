@@ -1,6 +1,7 @@
 import omni.log
 import omni.ui as ui
 
+from ..components.counter import counter_component
 from ..themes.colors import cl, color_gray
 
 
@@ -66,6 +67,11 @@ def create_modal(modal: ui.Window | None, int_model: ui.SimpleIntModel):
 
                 int_model.add_value_changed_fn(on_int_changed)
                 on_int_changed(int_model)
+
+                with ui.VStack(height=100, alignment=ui.Alignment.V_CENTER):
+                    ui.Spacer()
+                    counter_component("Modal Counter")
+                    ui.Spacer(height=30)
 
                 def show_hide_menu(menubar: ui.MenuBar):
                     menubar.visible = not menubar.visible
