@@ -14,6 +14,12 @@ def create_modal(modal: ui.Window | None, int_model: ui.SimpleIntModel):
             flags=ui.WINDOW_FLAGS_MENU_BAR,
         )
 
+        modal_style = {
+            "Label::large": {
+                "font_size": 28,
+            },
+        }
+
         menu_bar_style = {
             "MenuBar": {
                 "color": color_gray,
@@ -49,7 +55,17 @@ def create_modal(modal: ui.Window | None, int_model: ui.SimpleIntModel):
                 )
 
         with modal.frame:
-            with ui.VStack(height=0):
+            with ui.VStack(height=0, style=modal_style):
+                int_label = ui.Label(
+                    "",
+                    name="large",
+                )
+
+                def on_int_changed(model: ui.SimpleIntModel):
+                    int_label.text = f"Total Value: {model.as_int}"
+
+                int_model.add_value_changed_fn(on_int_changed)
+                on_int_changed(int_model)
 
                 def show_hide_menu(menubar: ui.MenuBar):
                     menubar.visible = not menubar.visible
@@ -57,24 +73,19 @@ def create_modal(modal: ui.Window | None, int_model: ui.SimpleIntModel):
                 ui.Button(
                     "Click here to show/hide Menu",
                     clicked_fn=lambda: show_hide_menu(modal.menu_bar),
+                    height=40,
                 )
-
-                int_label = ui.Label(
-                    str(int_model.as_int),
-                    style={"font_size": 24},
-                )
-
-                def on_int_changed(model: ui.SimpleIntModel):
-                    int_label.text = str(model.as_int)
-
-                int_model.add_value_changed_fn(on_int_changed)
 
                 def add_menu(menubar: ui.MenuBar):
                     with menubar:
                         with ui.Menu("New Menu"):
                             ui.MenuItem("I don't do anything")
 
-                ui.Button("Add New Menu", clicked_fn=lambda: add_menu(modal.menu_bar))
+                ui.Button(
+                    "Add New Menu",
+                    clicked_fn=lambda: add_menu(modal.menu_bar),
+                    height=40,
+                )
 
     omni.log.info("Modal Exists! Set visible to True")
     modal.visible = True
