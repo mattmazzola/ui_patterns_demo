@@ -26,18 +26,18 @@ class UIBuilder:
                 style={"font_size": 28},
             )
 
-            self._counter_1_int_model = counter_component("Counter 1")
-            self._counter_2_int_model = counter_component("Counter 2")
+            self._counter_1 = counter_component("Counter 1")
+            self._counter_2 = counter_component("Counter 2")
 
             # Create computed value from the sum of the two counters
             self._computed_int_model = ui.SimpleIntModel(0)
 
             def update_computed_value(_: ui.SimpleIntModel):
-                total = self._counter_1_int_model.as_int + self._counter_2_int_model.as_int
+                total = self._counter_1.int_model.as_int + self._counter_2.int_model.as_int
                 self._computed_int_model.set_value(total)
 
-            self._counter_1_int_model.add_value_changed_fn(update_computed_value)
-            self._counter_2_int_model.add_value_changed_fn(update_computed_value)
+            self._counter_1.int_model.add_value_changed_fn(update_computed_value)
+            self._counter_2.int_model.add_value_changed_fn(update_computed_value)
 
             self._computed_label = ui.Label(
                 f"Total: {self._computed_int_model.as_int}",

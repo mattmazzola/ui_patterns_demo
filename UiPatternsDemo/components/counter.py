@@ -1,7 +1,14 @@
+from dataclasses import dataclass, field
+
 import omni.log
 import omni.ui as ui
 
 from ..themes.default import counter_style
+
+
+@dataclass
+class CounterComponent:
+    int_model: ui.SimpleIntModel = field(default_factory=ui.SimpleIntModel)
 
 
 def counter_component(title: str = "Counter"):
@@ -61,4 +68,6 @@ def counter_component(title: str = "Counter"):
 
             ui.Spacer()
 
-    return counter_int_model
+    counter_component = CounterComponent(int_model=counter_int_model)
+
+    return counter_component
