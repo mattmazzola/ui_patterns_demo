@@ -1,6 +1,7 @@
 import gc
 import os
 import weakref
+from pathlib import Path
 
 import omni
 import omni.kit.app
@@ -10,6 +11,7 @@ import omni.timeline
 import omni.ui as ui
 import omni.ui.workspace_utils
 import omni.usd
+from dotenv import load_dotenv
 from omni.isaac.ui.element_wrappers import ScrollingWindow
 from omni.isaac.ui.menu import make_menu_item_description
 from omni.kit.menu.utils import add_menu_items, remove_menu_items
@@ -25,9 +27,12 @@ class Extension(omni.ext.IExt):
         self.ui_builder = UIBuilder()
 
         name = EXTENSION_TITLE
-        # TODO: Investigate env vars
+
+        extension_root = Path(__file__).parent.parent
+        env_file_path = extension_root / ".env"
+        load_dotenv(dotenv_path=env_file_path)
         is_debug = os.getenv("DEBUG", False) == "True"
-        is_debug = True
+
         # Build Window
         self._window = ScrollingWindow(
             title=name,
