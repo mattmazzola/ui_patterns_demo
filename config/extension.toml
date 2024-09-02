@@ -23,3 +23,7 @@ icon = "data/icon.png"
 
 [[python.module]]
 name = "UiPatternsDemo"
+
+[[env]]
+name = "DEBUG"
+value = "True"

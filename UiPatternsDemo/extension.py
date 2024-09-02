@@ -1,4 +1,5 @@
 import gc
+import os
 import weakref
 
 import omni
@@ -21,24 +22,31 @@ class Extension(omni.ext.IExt):
 
     def on_startup(self, ext_id: str):
         self.ext_id = ext_id
+        self.ui_builder = UIBuilder()
 
         name = EXTENSION_TITLE
+        # TODO: Investigate env vars
+        is_debug = os.getenv("DEBUG", False) == "True"
+        is_debug = True
         # Build Window
         self._window = ScrollingWindow(
             title=name,
             width=400,
             height=500,
-            visible=False,
+            visible=is_debug,
             dockPreference=ui.DockPreference.LEFT_BOTTOM,
         )
         self._window.set_visibility_changed_fn(self._on_window)
+
+        # Add menu item
         self._menu_items = [
             make_menu_item_description(self.ext_id, name, lambda a=weakref.proxy(self): a._menu_callback())
         ]
 
         add_menu_items(self._menu_items, MENU_BAR_BUTTON_NAME)
 
-        self.ui_builder = UIBuilder()
+        # If debug, show winodow by default
+        self._on_window(is_debug)
 
     def on_shutdown(self):
         omni.log.info(f"on_shutdown")
