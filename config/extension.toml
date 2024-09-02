@@ -27,3 +27,5 @@ name = "UiPatternsDemo"
 [[env]]
 name = "DEBUG"
 value = "True"
+override = true
+platform = "*"
