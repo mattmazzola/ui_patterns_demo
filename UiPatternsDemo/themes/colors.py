@@ -9,5 +9,8 @@ color_blue_dark = cl("#006eff")
 color_red = cl("#ffb27a")
 color_red_dark = cl("#cc5544")
 
-color_gray = cl("#aaaaaa")
-color_grey_dark = cl("#444444")
+color_gray = cl("#cccccc")
+color_gray_dark = cl("#444444")
+
+color_green = cl("#9ecc71")
+color_green_light = cl("#7bed9f")

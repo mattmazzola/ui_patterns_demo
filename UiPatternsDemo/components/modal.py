@@ -1,8 +1,15 @@
 import omni.log
 import omni.ui as ui
+from omni.ui import color as cl
 
 from ..components.counter import counter_component
-from ..themes.colors import cl, color_gray
+from ..themes.colors import (
+    color_blue,
+    color_gray,
+    color_green,
+    color_green_light,
+    color_white,
+)
 
 
 # https://docs.omniverse.nvidia.com/kit/docs/omni.kit.documentation.ui.style/latest/window.html#menubar
@@ -11,13 +18,27 @@ def create_modal(modal: ui.Window | None, int_model: ui.SimpleIntModel):
         modal = ui.Window(
             "Example Modal",
             width=300,
-            height=300,
+            height=320,
             flags=ui.WINDOW_FLAGS_MENU_BAR,
         )
 
         modal_style = {
             "Label::large": {
                 "font_size": 28,
+            },
+            "Button": {
+                "border_radius": 6,
+                "background_color": color_green,
+            },
+            "Button:hovered": {
+                "background_color": color_green_light,
+            },
+            "Button.Label": {
+                "font_size": 22,
+                "color": color_gray,
+            },
+            "Button.Label:hovered": {
+                "color": color_white,
             },
         }
 
