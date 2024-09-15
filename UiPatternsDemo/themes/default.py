@@ -3,6 +3,7 @@ from .colors import (
     color_blue,
     color_blue_dark,
     color_gray,
+    color_gray_dark,
     color_red,
     color_red_dark,
     color_white,
@@ -47,10 +48,10 @@ counter_style = {
     "DecrementButton.Label::dec": {
         "font_weight": "bold",
         "font_size": 24,
-        "color": color_gray,
+        "color": color_gray_dark,
     },
     "DecrementButton.Label::dec:hovered": {
-        "color": color_white,
+        "color": color_black,
     },
 }
 
